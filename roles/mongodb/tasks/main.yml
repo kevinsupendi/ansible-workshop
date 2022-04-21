@@ -1,0 +1,45 @@
+---
+- debug:
+    var: ansible_pkg_mgr
+
+- name: install mongoDB (Non Mac OS)
+  when: ansible_pkg_mgr != 'homebrew'
+  apt:
+    name: mongodb
+    state: present
+
+- name: Tap a Homebrew repository, state present
+  when: ansible_pkg_mgr == 'homebrew'
+  community.general.homebrew_tap:
+    name: mongodb/brew
+    path: /usr/local/bin
+
+- name: install mongoDB (Mac OS)
+  when: ansible_pkg_mgr == 'homebrew'
+  homebrew:
+    name: mongodb-community
+    path: /usr/local/bin
+    state: present
+    update_homebrew: yes
+
+- name: copy config file
+  copy:
+    src: mongodb.conf
+    dest: /etc/mongodb.conf
+  become: yes
+  notify:
+    - restart mongodb
+
+- name: Ensures /etc/security/limits.d/ dir exists
+  file:
+    path: /etc/security/limits.d/
+    state: directory
+  become: yes
+
+- name: create /etc/security/limits.d/mongodb.conf
+  template:
+    src: security-mongodb.conf.j2
+    dest: /etc/security/limits.d/mongodb.conf
+  become: yes
+  notify:
+    - restart mongodb

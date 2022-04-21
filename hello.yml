@@ -1,0 +1,23 @@
+---
+- name: Hello World
+  hosts:
+  connection: local
+  tasks:
+
+    - name: Disk usage from command module
+      command: df -h
+      register: space
+    - debug:
+        var: space
+
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
+    - name: Create file
+      ansible.builtin.file:
+        path:
+        state: touch
+
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
+    - name: Copy file
+      ansible.builtin.copy:
+        src:
+        dest:

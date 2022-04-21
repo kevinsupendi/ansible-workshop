@@ -1,0 +1,4 @@
+mongodb       soft        nproc        {{ mongodb_num_proc }}
+mongodb       hard        nproc        {{ mongodb_num_proc }}
+mongodb       soft        nofile       {{ mongodb_num_file }}
+mongodb       hard        nofile       {{ mongodb_num_file }}
