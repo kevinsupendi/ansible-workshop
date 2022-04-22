@@ -1,6 +1,6 @@
 ---
 - name: Hello World
-  hosts:
+  hosts: localhost
   connection: local
   tasks:
 
@@ -10,14 +10,19 @@
     - debug:
         var: space
 
+    - name: Creating a new directory
+      file:
+        path: "foo/"
+        state: directory
+
     # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
     - name: Create file
       ansible.builtin.file:
-        path:
+        path: foo/foo.txt
         state: touch
 
     # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
     - name: Copy file
       ansible.builtin.copy:
-        src:
-        dest:
+        src: world.txt
+        dest: foo/world.txt.bak
