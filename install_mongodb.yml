@@ -1,6 +1,6 @@
 ---
 - name: Install MongoDB
-  hosts:
+  hosts: myservers
   connection: local
   roles:
-    -
+    - mongodb

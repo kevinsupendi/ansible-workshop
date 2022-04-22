@@ -1,6 +1,6 @@
 ---
 - name: Hello World
-  hosts:
+  hosts: myservers
   connection: local
   tasks:
 
@@ -13,11 +13,11 @@
     # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
     - name: Create file
       ansible.builtin.file:
-        path:
+        path: gantengv1.txt
         state: touch
 
     # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
     - name: Copy file
       ansible.builtin.copy:
-        src:
-        dest:
+        src: world.txt
+        dest: ganteng.txt
